@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String @id @default(uuid())
+  email    String @unique
+  password String
+  name     String
+  credits  Int    @default(20)
+  role     String @default("user") // user, admin, employe
+
+  trips    Trip[] @relation("PassengerTrips")
+  createdTrips Trip[] @relation("DriverTrips")
+}
+
+model Trip {
+  id          String  @id @default(uuid())
+  driverId    String
+  driver      User    @relation("DriverTrips", fields: [driverId], references: [id])
+  passengers  User[]  @relation("PassengerTrips")
+
+  departure   String
+  arrival     String
+  date        DateTime
+  price       Int
+  seatsLeft   Int
+  isEco       Boolean @default(false)
+}
