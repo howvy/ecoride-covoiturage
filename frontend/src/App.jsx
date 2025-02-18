@@ -1,15 +1,22 @@
-import AppRouter from "./routes/AppRouter";
+import { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 
 function App() {
+  useEffect(() => {
+    console.log("App.jsx est bien monté !");
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div>
       <Navbar />
-      <main className="flex-grow">
-        <AppRouter />
-      </main>
-      <Footer />
+      <h1 className="text-center mt-10">Bienvenue sur EcoRide</h1>
+      <Routes>
+        <Route path="/" element={<h2>Accueil</h2>} />
+        <Route path="/covoiturages" element={<h2>Liste des covoiturages</h2>} />
+        <Route path="/contact" element={<h2>Contactez-nous</h2>} />
+        <Route path="/login" element={<h2>Connexion</h2>} />
+      </Routes>
     </div>
   );
 }
