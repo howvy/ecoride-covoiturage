@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import SearchResults from "./pages/SearchResults";
+import TripDetails from "./pages/TripDetails";
+
 
 function App() {
   useEffect(() => {
@@ -21,6 +23,7 @@ function App() {
           <Route path="/covoiturages" element={<h2>Liste des covoiturages</h2>} />
           <Route path="/contact" element={<h2>Contactez-nous</h2>} />
           <Route path="/login" element={<h2>Connexion</h2>} />
+          <Route path="/trip/:id" element={<TripDetails />} />
         </Routes>
       </main>
       <Footer />
