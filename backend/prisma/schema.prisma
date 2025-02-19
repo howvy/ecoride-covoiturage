@@ -32,3 +32,13 @@ model Trip {
   seatsLeft   Int
   isEco       Boolean @default(false)
 }
+
+model Booking {
+  id          String   @id @default(uuid())
+  userId      String   // ID de l'utilisateur (Clerk)
+  tripId      String   // ID du trajet réservé
+  createdAt   DateTime @default(now())
+
+  // Relation avec le Trip (trajet réservé)
+  trip   Trip   @relation(fields: [tripId], references: [id])
+}

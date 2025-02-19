@@ -1,8 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { MapPin, Calendar, User, Car, Star, CreditCard, ChevronLeft } from "lucide-react";
 
 export default function TripDetails() {
   const { id } = useParams(); // récupère l'ID du trajet depuis l'URL
+  const navigate = useNavigate(); // permet la redirection
 
   // ⚠️ Normalement, ces données viennent du backend (fetch API)
   const trip = {
@@ -44,7 +45,7 @@ export default function TripDetails() {
         </h1>
 
         <div className="bg-white shadow-smooth-lg rounded-2xl overflow-hidden mb-6">
-          {/* Header with route info */}
+          {/* Header avec infos trajet */}
           <div className="bg-gradient-to-r from-primary to-primary-dark text-light p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -64,7 +65,7 @@ export default function TripDetails() {
             </div>
           </div>
           
-          {/* Content */}
+          {/* Contenu */}
           <div className="p-6 space-y-6">
             {/* Infos Conducteur */}
             <div className="flex items-start space-x-4 bg-light-dark p-4 rounded-xl">
@@ -128,8 +129,11 @@ export default function TripDetails() {
           </div>
         </div>
 
-        {/* Bouton Réserver */}
-        <button className="w-full bg-primary hover:bg-primary-light text-light py-4 rounded-xl font-medium transition duration-300 text-lg shadow-smooth-lg flex items-center justify-center">
+        {/* Bouton Réserver avec redirection */}
+        <button 
+          onClick={() => navigate(`/checkout/${id}`)}
+          className="w-full bg-primary hover:bg-primary-light text-light py-4 rounded-xl font-medium transition duration-300 text-lg shadow-smooth-lg flex items-center justify-center"
+        >
           <CreditCard className="h-5 w-5 mr-2" />
           Réserver ce trajet
         </button>

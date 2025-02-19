@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Leaf, ChevronRight } from "lucide-react";
+import { Menu, X, Leaf, ChevronRight, User } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
@@ -26,54 +26,43 @@ const Navbar = () => {
     <nav 
       className={`fixed top-0 w-full z-50 transition-all duration-500 ease-in-out-expo
       ${scrolled 
-        ? "bg-dark/90 backdrop-blur-md shadow-smooth py-1" 
-        : "bg-gradient-to-r from-primary/95 to-primary/85 py-1.5"}`}
+        ? "bg-white/95 backdrop-blur-md shadow-smooth py-2" 
+        : "bg-gradient-to-r from-white/95 to-white/90 py-3"}`}
     >
-      <div className="container mx-auto flex justify-between items-center px-4 md:px-6 h-12">
+      <div className="container mx-auto flex justify-between items-center px-4 md:px-6">
         {/* Logo */}
         <Link 
           to="/" 
-          className="flex items-center group h-full"
+          className="flex items-center group"
         >
-          <Leaf className="text-secondary mr-1.5 group-hover:rotate-12 transition-transform duration-300" size={20} />
-          <span className="text-lg md:text-xl font-extrabold tracking-tight">
-            Eco<span className="bg-clip-text text-transparent bg-gradient-to-r from-secondary to-yellow-300">Ride</span>
+          <div className="bg-primary rounded-lg p-1.5 mr-2 shadow-sm group-hover:shadow-glow transition-all duration-300">
+            <Leaf className="text-light group-hover:rotate-12 transition-transform duration-300" size={18} />
+          </div>
+          <span className="text-lg md:text-xl font-extrabold tracking-tight text-dark">
+            Eco<span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-light">Ride</span>
           </span>
         </Link>
 
         {/* Menu Desktop */}
-        <ul className="hidden md:flex items-center space-x-5 lg:space-x-7 h-full">
-          <li className="h-full flex items-center">
-            <Link 
-              to="/" 
-              className="text-light/90 hover:text-secondary relative px-1 py-1 flex items-center h-full text-sm after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full"
-            >
-              Accueil
-            </Link>
-          </li>
-          <li className="h-full flex items-center">
-            <Link 
-              to="/covoiturages" 
-              className="text-light/90 hover:text-secondary relative px-1 py-1 flex items-center h-full text-sm after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full"
-            >
-              Covoiturages
-            </Link>
-          </li>
-          <li className="h-full flex items-center">
-            <Link 
-              to="/contact" 
-              className="text-light/90 hover:text-secondary relative px-1 py-1 flex items-center h-full text-sm after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-secondary after:transition-all after:duration-300 hover:after:w-full"
-            >
-              Contact
-            </Link>
-          </li>
-          <li className="flex items-center ml-2">
+        <ul className="hidden md:flex items-center space-x-1 lg:space-x-2">
+          {["Accueil", "Covoiturages", "Contact"].map((item, index) => (
+            <li key={index}>
+              <Link 
+                to={index === 0 ? "/" : `/${item.toLowerCase()}`}
+                className="text-dark-light hover:text-primary relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-primary-light/10"
+              >
+                {item}
+              </Link>
+            </li>
+          ))}
+          <li className="ml-2">
             <Link 
               to="/login" 
-              className="group bg-secondary/90 hover:bg-secondary text-dark font-medium px-3.5 py-1.5 rounded-lg text-sm transition-all duration-300 flex items-center"
+              className="group bg-primary text-light font-medium px-4 py-2 rounded-lg text-sm transition-all duration-300 flex items-center hover:bg-primary-dark shadow-sm hover:shadow-glow"
             >
+              <User size={16} className="mr-1.5 opacity-80" />
               Connexion
-              <ChevronRight className="ml-0.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" size={14} />
+              <ChevronRight className="ml-1 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" size={14} />
             </Link>
           </li>
         </ul>
@@ -81,7 +70,7 @@ const Navbar = () => {
         {/* Menu Burger (Mobile) */}
         <button 
           onClick={() => setIsOpen(!isOpen)} 
-          className="md:hidden bg-primary/30 p-1.5 rounded-lg text-light hover:bg-primary/50 transition-colors duration-300"
+          className="md:hidden bg-light-dark p-2 rounded-lg text-dark-light hover:bg-primary-light/20 hover:text-primary transition-colors duration-300 flex items-center justify-center"
           aria-label={isOpen ? "Close menu" : "Open menu"}
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -98,48 +87,51 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="md:hidden overflow-hidden"
           >
-            <motion.ul
+            <motion.div
               initial={{ y: -20 }}
               animate={{ y: 0 }}
-              transition={{ staggerChildren: 0.1, delayChildren: 0.1 }}
-              className="bg-gradient-to-b from-primary/95 to-dark/95 p-4 space-y-3 text-base flex flex-col items-center"
+              transition={{ duration: 0.3 }}
+              className="bg-white shadow-smooth-lg mx-4 my-2 rounded-xl overflow-hidden"
             >
-              {[
-                { to: "/", text: "Accueil" },
-                { to: "/covoiturages", text: "Covoiturages" },
-                { to: "/contact", text: "Contact" }
-              ].map((item, index) => (
-                <motion.li
-                  key={index}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  className="w-full"
-                >
-                  <Link 
-                    to={item.to} 
-                    className="block text-light/90 hover:text-secondary transition-all duration-300 py-1.5 border-b border-primary/30"
-                    onClick={() => setIsOpen(false)}
+              <ul className="divide-y divide-light-dark/30">
+                {[
+                  { to: "/", text: "Accueil", icon: "🏠" },
+                  { to: "/covoiturages", text: "Covoiturages", icon: "🚗" },
+                  { to: "/contact", text: "Contact", icon: "📞" }
+                ].map((item, index) => (
+                  <motion.li
+                    key={index}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
                   >
-                    {item.text}
-                  </Link>
-                </motion.li>
-              ))}
-              <motion.li
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
+                    <Link 
+                      to={item.to} 
+                      className="flex items-center text-dark-light hover:text-primary hover:bg-primary-light/10 transition-all duration-300 py-3 px-4"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <span className="mr-3">{item.icon}</span>
+                      {item.text}
+                    </Link>
+                  </motion.li>
+                ))}
+              </ul>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="w-full pt-1"
+                className="p-3 bg-light-dark/20"
               >
                 <Link 
                   to="/login" 
-                  className="block bg-secondary/90 hover:bg-secondary text-dark font-medium px-4 py-2 rounded-lg transition-all duration-300 text-center text-sm"
+                  className="flex items-center justify-center bg-primary hover:bg-primary-dark text-light font-medium px-4 py-2.5 rounded-lg transition-all duration-300 shadow-sm"
                   onClick={() => setIsOpen(false)}
                 >
+                  <User size={16} className="mr-2 opacity-80" />
                   Connexion
                 </Link>
-              </motion.li>
-            </motion.ul>
+              </motion.div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
