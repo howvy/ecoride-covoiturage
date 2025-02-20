@@ -7,6 +7,10 @@ import SearchResults from "./pages/SearchResults";
 import TripDetails from "./pages/TripDetails";
 import Checkout from "./pages/Checkout";
 import UserDashboard from "./pages/UserDashboard";
+import DriverDashboard from "./pages/DriverDashboard";
+import History from "./pages/History";
+import Admin from "./pages/Admin";
+import Employee from "./pages/Employee"; 
 
 function App() {
   useEffect(() => {
@@ -27,6 +31,10 @@ function App() {
           <Route path="/trip/:id" element={<TripDetails />} />
           <Route path="/checkout/:id" element={<Checkout />} />
           <Route path="/dashboard/user" element={<UserDashboard />} />
+          <Route path="/dashboard/driver" element={<DriverDashboard />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/employee" element={<Employee />} />
         </Routes>
       </main>
       <Footer />
